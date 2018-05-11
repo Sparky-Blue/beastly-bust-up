@@ -1,0 +1,6 @@
+#startScreen {
+  display: flex;
+  flex-direction: column;
+  width: 90vw;
+  align-content: center;
+}

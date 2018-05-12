@@ -1,0 +1,14 @@
+#draftCards {
+  display: flex;
+  justify-content: space-between;
+}
+
+.draftCard {
+  width: 20vw;
+  height: 32vh;
+}
+
+.draftImg {
+  width: 17vw;
+  height: 28vh;
+}

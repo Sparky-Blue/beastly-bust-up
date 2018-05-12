@@ -1,0 +1,14 @@
+#habitats {
+  display: flex;
+  justify-content: space-between;
+}
+
+.habitatCard {
+  width: 20vw;
+  height: 32vh;
+}
+
+.habitatImg {
+  width: 17vw;
+  height: 28vh;
+}

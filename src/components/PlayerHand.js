@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import Fighters from "./Fighters";
+import "./PlayerHand.css";
 
 class PlayerHand extends Component {
   render() {
     return (
       <div id="playerHand">
-        <Fighters />
+        {this.props.playerHand.map((card, i) => {
+          return <Fighters card={card} key={i} />;
+        })}
       </div>
     );
   }

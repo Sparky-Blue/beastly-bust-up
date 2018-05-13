@@ -40,14 +40,19 @@ class PlayScreen extends Component {
     });
   };
 
+  addPlayerCard = (set, card) => {
+    this.setState({
+      playerHand: [...this.state.playerHand, this.state.draftCards[set][card]]
+    });
+  };
+
   render() {
     const { habitats, draftCards } = this.state;
-    console.log(draftCards);
     return (
       <div id="playScreen">
         <HabitatView habitats={habitats} />
-        <DraftView draftCards={draftCards} />
-        <PlayerHand />
+        <DraftView draftCards={draftCards} addPlayerCard={this.addPlayerCard} />
+        <PlayerHand playerHand={this.state.playerHand} />
         <Winner />
       </div>
     );

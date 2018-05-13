@@ -1,4 +1,4 @@
-#draftCards {
+#playerHand {
   display: flex;
   justify-content: space-between;
   z-index: 1;
@@ -6,13 +6,13 @@
   width: 100vw;
 }
 
-.draftCard {
+.fighters {
   width: 20vw;
   height: 32vh;
   z-index: 2;
 }
 
-.draftImg {
+.cardImg {
   width: 17vw;
   height: 28vh;
 }

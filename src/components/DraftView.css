@@ -1,9 +1,16 @@
-#draftCards {
+.draftCards {
   display: flex;
   justify-content: space-between;
   z-index: 1;
   height: 50vh;
   width: 100vw;
+}
+
+#draftCards1 {
+  background: cadetblue;
+}
+#draftCards2 {
+  background: lemonchiffon;
 }
 
 .draftCard {

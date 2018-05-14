@@ -10,7 +10,8 @@ import { getRandomCards } from "../utils";
 class PlayScreen extends Component {
   state = {
     habitats: [],
-    draftCards: { set1: [], set2: [] },
+    draftCardsSet1: [],
+    draftCardsSet2: [],
     playerHand: [],
     computerHand: []
   };
@@ -30,28 +31,52 @@ class PlayScreen extends Component {
   };
 
   getDraft = () => {
-    const fighterIndexes1 = getRandomCards(6, fightersData.length);
-    const fighterIndexes2 = getRandomCards(6, fightersData.length);
+    const fighterIndexes = getRandomCards(12, fightersData.length);
+    console.log(fighterIndexes);
+    const fighters = fighterIndexes.map(index => fightersData[index]);
     this.setState({
-      draftCards: {
-        set1: fighterIndexes1.map(index => fightersData[index]),
-        set2: fighterIndexes1.map(index => fightersData[index])
-      }
+      draftCardsSet1: fighters.filter((fighter, i) => i % 2 === 0),
+      draftCardsSet2: fighters.filter((fighter, i) => i % 2 !== 0)
     });
   };
 
-  addPlayerCard = (set, card) => {
+  addComputerCard = () => {
+    console.log(this.state.draftCardsSet2);
+    const { computerHand } = this.state;
+    const set = computerHand.length % 2 ? "draftCardsSet1" : "draftCardsSet2";
+    const card = this.state[set].reduce((prev, current, i) => {
+      return this.state[set][prev].rank > current.rank ? prev : i;
+    }, 0);
     this.setState({
-      playerHand: [...this.state.playerHand, this.state.draftCards[set][card]]
+      computerHand: [...computerHand, this.state[set][card]]
+    });
+    this.removeDraftCard(set, card);
+  };
+
+  addPlayerCard = (set, card) => {
+    this.addComputerCard();
+    this.setState({
+      playerHand: [...this.state.playerHand, this.state[set][card]]
+    });
+    this.removeDraftCard(set, card);
+  };
+
+  removeDraftCard = (set, card) => {
+    this.setState({
+      [set]: this.state[set].filter((item, i) => i !== card)
     });
   };
 
   render() {
-    const { habitats, draftCards } = this.state;
+    const { habitats, draftCardsSet1, draftCardsSet2 } = this.state;
     return (
       <div id="playScreen">
         <HabitatView habitats={habitats} />
-        <DraftView draftCards={draftCards} addPlayerCard={this.addPlayerCard} />
+        <DraftView
+          draftCardsSet1={draftCardsSet1}
+          draftCardsSet2={draftCardsSet2}
+          addPlayerCard={this.addPlayerCard}
+        />
         <PlayerHand playerHand={this.state.playerHand} />
         <Winner />
       </div>

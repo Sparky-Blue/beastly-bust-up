@@ -5,38 +5,50 @@ import CardPose from "./CardPose";
 import SliderPose from "./SliderPose";
 
 class DraftView extends Component {
-  state = { draftCards: [true, true, true, true, true, true] };
+  state = { cardSet1: true };
 
   selectCard = index => {
-    const { draftCards } = this.state;
+    this.props.addPlayerCard(
+      this.state.cardSet1 ? "draftCardsSet1" : "draftCardsSet2",
+      index
+    );
+
     this.setState({
-      draftCards: draftCards.map((card, i) => {
-        if (i === index) return false;
-        return card;
-      })
+      cardSet1: !this.state.cardSet1
     });
-    this.props.addPlayerCard("set1", index);
   };
 
   render() {
+    const { cardSet1 } = this.state;
     return (
-      <SliderPose id="draftCards">
-        {this.props.draftCards.set1.map((draft, i) => {
-          return (
-            <CardPose
-              className="draftCard"
-              id={`draft${i}`}
-              key={i}
-              pose={this.state.draftCards[i] ? "start" : "inHand"}
-              onClick={() => this.selectCard(i)}
-            >
-              <h3>{draft.name}</h3>
-              <p>{draft.habitat}</p>
-              <img src={draft.img} alt={draft.name} className="draftImg" />
-              {draft.traits.map((trait, i2) => <p key={i2}>{trait}</p>)}
-            </CardPose>
-          );
-        })}
+      <SliderPose
+        className="draftCards"
+        id={`draftCards${cardSet1 ? "1" : "2"}`}
+      >
+        <PoseGroup
+          animateOnMount={true}
+          preEnterPose={"exit"}
+          enterPose={"enter"}
+          exitPose={"exit"}
+        >
+          {this.props[cardSet1 ? "draftCardsSet1" : "draftCardsSet2"].map(
+            (draft, i) => {
+              return (
+                <CardPose
+                  className="draftCard"
+                  id={`draft${i}`}
+                  key={draft.id}
+                  onClick={() => this.selectCard(i)}
+                >
+                  <h3>{draft.name}</h3>
+                  <p>{draft.habitat}</p>
+                  <img src={draft.img} alt={draft.name} className="draftImg" />
+                  {draft.traits.map((trait, i2) => <p key={i2}>{trait}</p>)}
+                </CardPose>
+              );
+            }
+          )}
+        </PoseGroup>
       </SliderPose>
     );
   }

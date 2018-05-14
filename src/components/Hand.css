@@ -1,0 +1,13 @@
+/* #playerHand {
+  background: teal;
+
+}
+
+#computerHand {
+  background: lemonchiffon;
+
+} */
+
+.selected.fighters {
+  background: fuchsia;
+}

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import HabitatView from "./HabitatView";
-import PlayerHand from "./PlayerHand";
+import Hand from "./Hand";
 import DraftView from "./DraftView";
 import GameStart from "./GameStart";
 import Winner from "./Winner";
@@ -15,8 +15,12 @@ class PlayScreen extends Component {
     draftCardsSet2: [],
     playerHand: [],
     computerHand: [],
-    startGame: false,
-    playerGo: true
+    startScreen: false,
+    drafting: true,
+    activePlay: false,
+    playerGo: true,
+    habitatPlayerCards: [],
+    habitatComputerCards: []
   };
 
   componentDidMount() {
@@ -26,7 +30,9 @@ class PlayScreen extends Component {
 
   componentDidUpdate(newProps, prevState) {
     if (prevState.playerHand.length === 5 && this.state.playerHand.length === 6)
-      this.startGame();
+      this.startScreenActivate();
+    if (prevState.playerGo === true && this.state.playerGo === false)
+      this.computerMove();
   }
 
   getHabitats = () => {
@@ -74,9 +80,16 @@ class PlayScreen extends Component {
     });
   };
 
+  startScreenActivate = () =>
+    this.setState({
+      drafting: false,
+      startScreen: true
+    });
+
   startGame = () =>
     this.setState({
-      startGame: true
+      startScreen: false,
+      activePlay: true
     });
 
   changePlayer = () => {
@@ -85,32 +98,101 @@ class PlayScreen extends Component {
     });
   };
 
+  handleClick = (name, card) => {
+    if (name === "playerHand") {
+      this.selectFighter(card);
+    }
+
+    if (name === "habitat") {
+      this.selectHabitat(card);
+    }
+  };
+
+  selectFighter = card => {
+    this.setState({
+      selectedCard: card
+    });
+  };
+
+  selectHabitat = index => {
+    const card = this.state.playerHand[index];
+    this.setState({
+      habitats: this.state.habitats.map((habitat, i) => {
+        if (index === i) habitat.cards.push(card);
+        return habitat;
+      }),
+      playerHand: this.state.playerHand.filter((item, i) => i !== index)
+    });
+    this.checkTraits(card);
+  };
+
+  checkTraits = card => {
+    console.log(card.traits);
+    if (card.traits.includes("FIERCE")) {
+    }
+    if (card.traits.includes("HEFTY")) {
+    }
+    if (card.traits.includes("QUICK")) {
+    }
+    this.changePlayer();
+  };
+
+  computerMove = () => {
+    const { computerHand, playerHand } = this.state;
+    const card = computerHand[0];
+    const index = 0;
+    this.setState({
+      habitats: this.state.habitats.map((habitat, i) => {
+        if (index === i) habitat.computerCards.push(card);
+        return habitat;
+      }),
+      computerHand: this.state.computerHand.filter((item, i) => i !== 0)
+    });
+    this.checkTraits(card);
+  };
+
+  playerMove = () => {
+    this.state.computerHand;
+  };
+
   render() {
     const {
       habitats,
       draftCardsSet1,
       draftCardsSet2,
       playerHand,
-      computerHand
+      computerHand,
+      playerGo,
+      selectedCard
     } = this.state;
     return (
       <div id="playScreen">
-        <HabitatView habitats={habitats} />
-        {!this.state.startGame && (
+        {this.state.activePlay && (
+          <Hand hand={this.state.computerHand} title="computerHand" />
+        )}
+        <HabitatView habitats={habitats} handleClick={this.handleClick} />
+        {this.state.drafting && (
           <DraftView
             draftCardsSet1={draftCardsSet1}
             draftCardsSet2={draftCardsSet2}
             addPlayerCard={this.addPlayerCard}
           />
         )}
-        {this.state.startGame && (
+        {this.state.startScreen && (
           <GameStart
             playerHand={playerHand}
             computerHand={computerHand}
             changePlayer={this.changePlayer}
+            startGame={this.startGame}
           />
         )}
-        <PlayerHand playerHand={this.state.playerHand} />
+        <Hand
+          hand={this.state.playerHand}
+          title="playerHand"
+          playerGo={playerGo}
+          handleClick={this.handleClick}
+          selectedCard={selectedCard}
+        />
         <Winner />
       </div>
     );

@@ -3,7 +3,12 @@ import Habitats from "./Habitats";
 
 class HabitatView extends Component {
   render() {
-    return <Habitats habitats={this.props.habitats} />;
+    return (
+      <Habitats
+        habitats={this.props.habitats}
+        handleClick={this.props.handleClick}
+      />
+    );
   }
 }
 

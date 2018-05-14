@@ -2,8 +2,9 @@
   display: flex;
   justify-content: space-between;
   z-index: 1;
-  height: 50vh;
+  height: 30vh;
   width: 100vw;
+  /* overflow: hidden; */
 }
 
 #draftCards1 {
@@ -18,6 +19,7 @@
   height: 30vh;
   z-index: 2;
   background: white;
+  overflow: hidden;
 }
 
 .cardImg {

@@ -1,14 +1,16 @@
 #habitats {
   display: flex;
   justify-content: space-between;
+  height: 30vh;
+  overflow: hidden;
 }
 
 .habitatCard {
-  width: 20vw;
-  height: 32vh;
+  width: 23vw;
+  height: 30vh;
 }
 
 .habitatImg {
-  width: 17vw;
-  height: 28vh;
+  width: 22vw;
+  height: 18vh;
 }

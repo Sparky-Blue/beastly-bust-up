@@ -7,7 +7,7 @@ import "./PlayerHand.css";
 class PlayerHand extends Component {
   render() {
     return (
-      <div id="playerHand">
+      <div className="cards" id="playerHand">
         <PoseGroup
           animateOnMount={true}
           preEnterPose={"exit"}
@@ -17,6 +17,7 @@ class PlayerHand extends Component {
             return (
               <FighterPose className="fighters" key={card.id}>
                 <h3>{card.name}</h3>
+                <p>{card.rank}</p>
                 <p>{card.habitat}</p>
                 <img src={card.img} alt={card.name} className="cardImg" />
                 {card.traits.map((trait, i) => <p key={i}>{trait}</p>)}

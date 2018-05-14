@@ -1,7 +1,12 @@
 export function getRandomCards(number, cards) {
   const randomCardsIndex = [];
   for (let n = number; n > 0; n--) {
-    randomCardsIndex.push(Math.floor(Math.random() * cards));
+    const number = Math.floor(Math.random() * cards);
+    if (randomCardsIndex.includes(number)) {
+      n++;
+      continue;
+    }
+    randomCardsIndex.push(number);
   }
   return randomCardsIndex;
 }

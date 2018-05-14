@@ -25,6 +25,7 @@ class GameStart extends Component {
     const { playerRank, computerRank } = this.state;
     playerRank < computerRank && this.props.changePlayer();
   };
+
   render() {
     const { playerRank, computerRank } = this.state;
     return (
@@ -32,6 +33,7 @@ class GameStart extends Component {
         startPlayer={playerRank >= computerRank ? "player" : "computer"}
         playerRank={playerRank}
         computerRank={computerRank}
+        startGame={this.props.startGame}
       />
     );
   }

@@ -1,4 +1,4 @@
-.draftCards {
+.cards {
   display: flex;
   justify-content: space-between;
   z-index: 1;
@@ -13,13 +13,13 @@
   background: lemonchiffon;
 }
 
-.draftCard {
-  width: 20vw;
-  height: 32vh;
+.fighters {
+  width: 15vw;
+  height: 30vh;
   z-index: 2;
+  background: white;
 }
 
-.draftImg {
-  width: 17vw;
-  height: 28vh;
+.cardImg {
+  width: 14vw;
 }

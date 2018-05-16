@@ -11,3 +11,7 @@
 .selected.fighters {
   background: fuchsia;
 }
+
+.selected.blank {
+  opacity: 0;
+}

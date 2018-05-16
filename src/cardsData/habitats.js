@@ -2,144 +2,126 @@ const habitats = [
   {
     name: "caves",
     points: 2,
-    img:
-      "http://img14.deviantart.net/e86a/i/2015/007/8/7/relic_ball__african_savanna_by_appylon-d4evbnq.jpg",
+    img: "Cave.png",
     cards: [],
     computerCards: []
   },
   {
     name: "desert",
     points: 4,
-    img:
-      "http://s1.picswalls.com/wallpapers/2014/02/23/desert-wallpaper-hd_111709788_32.jpg",
+    img: "Desert.png",
     cards: [],
     computerCards: []
   },
   {
     name: "field",
     points: 1,
-    img:
-      "https://upload.wikimedia.org/wikipedia/commons/d/d4/Misty_field%2C_Telemark%2C_Norway.jpg",
+    img: "Field.png",
     cards: [],
     computerCards: []
   },
   {
     name: "foothills",
     points: 3,
-    img:
-      "http://img14.deviantart.net/e86a/i/2015/007/8/7/relic_ball__african_savanna_by_appylon-d4evbnq.jpg",
+    img: "Foothills.png",
     cards: [],
     computerCards: []
   },
   {
     name: "forest",
     points: 2,
-    img:
-      "http://img14.deviantart.net/e86a/i/2015/007/8/7/relic_ball__african_savanna_by_appylon-d4evbnq.jpg",
+    img: "Forest.png",
     cards: [],
     computerCards: []
   },
   {
     name: "hills",
     points: 2,
-    img:
-      "http://img14.deviantart.net/e86a/i/2015/007/8/7/relic_ball__african_savanna_by_appylon-d4evbnq.jpg",
+    img: "Hills.png",
     cards: [],
     computerCards: []
   },
   {
-    name: "iceberg",
+    name: "Ice_Floes",
     points: 4,
-    img:
-      "http://img14.deviantart.net/e86a/i/2015/007/8/7/relic_ball__african_savanna_by_appylon-d4evbnq.jpg",
+    img: "Ice_Floes.png",
     cards: [],
     computerCards: []
   },
   {
-    name: "rainforest",
+    name: "Jungle",
     points: 3,
-    img:
-      "http://img14.deviantart.net/e86a/i/2015/007/8/7/relic_ball__african_savanna_by_appylon-d4evbnq.jpg",
+    img: "Jungle.png",
     cards: [],
     computerCards: []
   },
   {
-    name: "night",
+    name: "Nocturnal",
     points: 2,
-    img:
-      "http://img14.deviantart.net/e86a/i/2015/007/8/7/relic_ball__african_savanna_by_appylon-d4evbnq.jpg",
+    img: "Nocturnal.png",
     cards: [],
     computerCards: []
   },
   {
-    name: "sea",
+    name: "Ocean",
     points: 3,
-    img:
-      "http://img14.deviantart.net/e86a/i/2015/007/8/7/relic_ball__african_savanna_by_appylon-d4evbnq.jpg",
+    img: "Ocean.png",
     cards: [],
     computerCards: []
   },
   {
-    name: "mountains",
+    name: "Peaks",
     points: 4,
-    img:
-      "http://img14.deviantart.net/e86a/i/2015/007/8/7/relic_ball__african_savanna_by_appylon-d4evbnq.jpg",
+    img: "Peaks.png",
     cards: [],
     computerCards: []
   },
   {
-    name: "savanna",
+    name: "Plains",
     points: 1,
-    img:
-      "http://img14.deviantart.net/e86a/i/2015/007/8/7/relic_ball__african_savanna_by_appylon-d4evbnq.jpg",
+    img: "Plains.png",
     cards: [],
     computerCards: []
   },
   {
-    name: "river",
+    name: "River",
     points: 3,
-    img:
-      "http://img14.deviantart.net/e86a/i/2015/007/8/7/relic_ball__african_savanna_by_appylon-d4evbnq.jpg",
+    img: "River.png",
     cards: [],
     computerCards: []
   },
   {
-    name: "beach",
+    name: "Shore",
     points: 1,
-    img:
-      "http://img14.deviantart.net/e86a/i/2015/007/8/7/relic_ball__african_savanna_by_appylon-d4evbnq.jpg",
+    img: "Shore.png",
     cards: [],
     computerCards: []
   },
   {
-    name: "swamp",
+    name: "Swamp",
     points: 3,
-    img:
-      "http://img14.deviantart.net/e86a/i/2015/007/8/7/relic_ball__african_savanna_by_appylon-d4evbnq.jpg",
+    img: "Swamp.png",
     cards: [],
     computerCards: []
   },
   {
-    name: "snow",
+    name: "Tundra",
     points: 2,
-    img:
-      "http://img14.deviantart.net/e86a/i/2015/007/8/7/relic_ball__african_savanna_by_appylon-d4evbnq.jpg",
+    img: "Tundra.png",
     cards: [],
     computerCards: []
   },
   {
-    name: "under the sea",
+    name: "UnderSea",
     points: 4,
-    img:
-      "http://img14.deviantart.net/e86a/i/2015/007/8/7/relic_ball__african_savanna_by_appylon-d4evbnq.jpg",
+    img: "UnderSea.png",
     cards: [],
     computerCards: []
   },
   {
-    name: "urban street",
+    name: "Urban",
     points: 1,
-    img:
-      "http://img14.deviantart.net/e86a/i/2015/007/8/7/relic_ball__african_savanna_by_appylon-d4evbnq.jpg",
+    img: "Urban",
     cards: [],
     computerCards: []
   }

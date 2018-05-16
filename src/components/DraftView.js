@@ -34,7 +34,7 @@ class DraftView extends Component {
                 <CardPose
                   className="fighters"
                   id={`draft${i}`}
-                  key={draft.id}
+                  key={draft.name}
                   onClick={() => this.selectCard(i)}
                 >
                   <h3>{draft.name}</h3>

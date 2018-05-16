@@ -4,8 +4,10 @@ import Hand from "./Hand";
 import DraftView from "./DraftView";
 import GameStart from "./GameStart";
 import Winner from "./Winner";
+import PlayedTraitsActions from "./PlayedTraitsActions";
 import habitatsData from "../cardsData/habitats";
 import fightersData from "../cardsData/fighters";
+
 import { getRandomCards } from "../utils";
 
 class PlayScreen extends Component {
@@ -19,8 +21,8 @@ class PlayScreen extends Component {
     drafting: true,
     activePlay: false,
     playerGo: true,
-    habitatPlayerCards: [],
-    habitatComputerCards: []
+    playedTraits: false,
+    currentTraits: []
   };
 
   componentDidMount() {
@@ -31,7 +33,19 @@ class PlayScreen extends Component {
   componentDidUpdate(newProps, prevState) {
     if (prevState.playerHand.length === 5 && this.state.playerHand.length === 6)
       this.startScreenActivate();
-    if (prevState.playerGo === true && this.state.playerGo === false)
+    if (
+      prevState.playerGo === true &&
+      this.state.playerGo === false &&
+      this.state.activePlay === true
+    ) {
+      this.computerMove();
+      return;
+    }
+    if (
+      prevState.activePlay === false &&
+      this.state.activePlay === true &&
+      this.state.playerGo === false
+    )
       this.computerMove();
   }
 
@@ -108,51 +122,69 @@ class PlayScreen extends Component {
     }
   };
 
-  selectFighter = card => {
+  selectFighter = index => {
     this.setState({
-      selectedCard: card
+      selectedCard: index
     });
   };
 
   selectHabitat = index => {
-    const card = this.state.playerHand[index];
+    const card = this.state.playerHand[this.state.selectedCard];
     this.setState({
       habitats: this.state.habitats.map((habitat, i) => {
         if (index === i) habitat.cards.push(card);
         return habitat;
       }),
-      playerHand: this.state.playerHand.filter((item, i) => i !== index)
+      playerHand: this.state.playerHand.map(
+        (item, i) => (i !== this.state.selectedCard ? item : null)
+      ),
+      selectedCard: null
     });
     this.checkTraits(card);
   };
 
+  togglePlayedTraits = () =>
+    this.setState({ playedTraits: !this.state.playedTraits });
+
   checkTraits = card => {
-    console.log(card.traits);
+    if (
+      card.traits.includes("FIERCE") ||
+      card.traits.includes("HEFTY") ||
+      card.traits.includes("QUICK")
+    ) {
+      this.setState({ playedTraits: true, currentTraits: card.traits });
+    }
     if (card.traits.includes("FIERCE")) {
+      //select card to trash
     }
     if (card.traits.includes("HEFTY")) {
+      //select card to bounce
     }
     if (card.traits.includes("QUICK")) {
+      //choose to play another card
     }
     this.changePlayer();
   };
 
   computerMove = () => {
-    const { computerHand, playerHand } = this.state;
-    const card = computerHand[0];
-    const index = 0;
+    const { computerHand } = this.state;
+    const habitatIndex = Math.floor(Math.random() * 3);
+    const index = computerHand.reduce((acc, card, i) => {
+      if (card !== null) acc = i;
+      return acc;
+    }, -1);
+    if (index === -1) return;
+    const card = computerHand[index];
     this.setState({
       habitats: this.state.habitats.map((habitat, i) => {
-        if (index === i) habitat.computerCards.push(card);
+        if (habitatIndex === i) habitat.computerCards.push(card);
         return habitat;
       }),
-      computerHand: this.state.computerHand.filter((item, i) => i !== 0)
+      computerHand: this.state.computerHand.map(
+        (item, i) => (i !== index ? item : null)
+      )
     });
     this.checkTraits(card);
-  };
-
-  playerMove = () => {
-    this.state.computerHand;
   };
 
   render() {
@@ -185,6 +217,9 @@ class PlayScreen extends Component {
             changePlayer={this.changePlayer}
             startGame={this.startGame}
           />
+        )}
+        {this.state.playedTraits && (
+          <PlayedTraitsActions traits={this.state.currentTraits} />
         )}
         <Hand
           hand={this.state.playerHand}

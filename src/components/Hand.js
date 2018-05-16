@@ -3,6 +3,7 @@ import Fighters from "./Fighters";
 import { PoseGroup } from "react-pose";
 import FighterPose from "./FighterPose";
 import "./Hand.css";
+import BlankPose from "./BlankPose";
 
 class Hand extends Component {
   state = {
@@ -18,14 +19,16 @@ class Hand extends Component {
           enterPose={"enter"}
         >
           {this.props.hand.map((card, i) => {
-            return (
+            return card === null ? (
+              <BlankPose className="fighters blank" key={i} />
+            ) : (
               <FighterPose
                 className={
                   this.props.selectedCard === i
                     ? "fighters selected"
                     : "fighters"
                 }
-                key={card.id}
+                key={card.name}
                 onClick={
                   this.props.playerGo
                     ? () => this.props.handleClick(this.props.title, i)

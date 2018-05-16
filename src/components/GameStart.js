@@ -8,8 +8,13 @@ class GameStart extends Component {
   };
   componentDidMount() {
     this.calculateRanks();
-    this.setStartPlayer();
   }
+
+  componentDidUpdate(newProps, prevState) {
+    if (prevState.computerRank === null && this.state.computerRank !== null)
+      this.setStartPlayer();
+  }
+
   calculateRanks = () => {
     this.setState({
       playerRank: this.props.playerHand.reduce((acc, fighter) => {
@@ -23,6 +28,7 @@ class GameStart extends Component {
 
   setStartPlayer = () => {
     const { playerRank, computerRank } = this.state;
+    console.log({ playerRank }, { computerRank });
     playerRank < computerRank && this.props.changePlayer();
   };
 

@@ -4,6 +4,8 @@ import { PoseGroup } from "react-pose";
 import FighterPose from "./FighterPose";
 import "./Hand.css";
 import BlankPose from "./BlankPose";
+import cloudinary from "cloudinary-core";
+const cloudinaryCore = new cloudinary.Cloudinary({ cloud_name: "beastlyb" });
 
 class Hand extends Component {
   state = {
@@ -29,6 +31,7 @@ class Hand extends Component {
                     : "fighters"
                 }
                 key={card.name}
+                id={card.name}
                 onClick={
                   this.props.playerGo
                     ? () => this.props.handleClick(this.props.title, i)
@@ -36,15 +39,11 @@ class Hand extends Component {
                 }
               >
                 {this.props.title === "playerHand" ? (
-                  <Fragment>
-                    <h3>{card.name}</h3>
-                    <p>{card.rank}</p>
-                    <p>{card.habitat}</p>
-                    <img src={card.img} alt={card.name} className="cardImg" />
-                    {card.traits.map((trait, i) => <p key={i}>{trait}</p>)}
-                  </Fragment>
+                  <Fighters card={card} />
                 ) : (
-                  <div />
+                  <div>
+                    <img src={cloudinaryCore.url(`Background.png`)} />
+                  </div>
                 )}
               </FighterPose>
             );

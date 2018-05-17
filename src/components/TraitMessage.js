@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import "./ActionMessage.css";
 
 const TraitMessage = ({ action, handleClick }) => {
   return (

@@ -2,19 +2,23 @@
   display: flex;
   justify-content: space-between;
   height: 30vh;
-  /* overflow: hidden; */
 }
 
-.habitatCard {
+/* .habitatCard {
   width: 23vw;
   height: 30vh;
-}
+} */
 
 .habitatImg {
   width: 22vw;
-  height: 18vh;
 }
 
 .fighterInHabitat {
   display: flex;
+  height: 15vh;
+  margin: 5px;
+}
+
+.fighterInHabitatImg {
+  height: 15vh;
 }

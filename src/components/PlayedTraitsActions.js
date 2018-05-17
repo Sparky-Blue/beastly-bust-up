@@ -10,6 +10,7 @@ class PlayedTraitActions extends Component {
   componentDidMount() {
     this.checkTraits(this.props.traits);
   }
+
   checkTraits = traits => {
     if (traits.includes("FIERCE") && traits.includes("HEFTY")) {
       this.showMessage("FH");
@@ -17,10 +18,12 @@ class PlayedTraitActions extends Component {
     }
     if (traits.includes("FIERCE")) {
       this.showMessage("F");
+      this.props.setCurrentTrait("F");
       return;
     }
     if (traits.includes("HEFTY")) {
       this.showMessage("H");
+      this.props.setCurrentTrait("H");
       return;
     }
     if (traits.includes("QUICK")) {

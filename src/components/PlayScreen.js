@@ -4,7 +4,7 @@ import Hand from "./Hand";
 import DraftView from "./DraftView";
 import GameStart from "./GameStart";
 import Winner from "./Winner";
-import PlayedTraitsActions from "./PlayedTraitsActions";
+import TraitMessage from "./TraitMessage";
 import habitatsData from "../cardsData/habitats";
 import fightersData from "../cardsData/fighters";
 
@@ -21,8 +21,11 @@ class PlayScreen extends Component {
     drafting: true,
     activePlay: false,
     playerGo: true,
-    playedTraits: false,
-    currentTraits: []
+    chooseHabitat: false,
+    selectedCard: null,
+    bounceHabitat: null,
+    traitActionCard: null,
+    currentTrait: null
   };
 
   componentDidMount() {
@@ -47,6 +50,16 @@ class PlayScreen extends Component {
       this.state.playerGo === false
     )
       this.computerMove();
+    if (
+      prevState.bounceHabitat === null &&
+      this.state.bounceHabitat !== null &&
+      this.state.currentTrait === "H"
+    ) {
+      this.bounceCard(this.state.traitActionCard, this.state.bounceHabitat);
+    }
+    if (prevState.currentTrait !== null && this.state.currentTrait === null) {
+      this.checkTraits({ traits: [...this.state.traitsList] });
+    }
   }
 
   getHabitats = () => {
@@ -112,13 +125,40 @@ class PlayScreen extends Component {
     });
   };
 
-  handleClick = (name, card) => {
+  handleClick = (name, value, habitat) => {
     if (name === "playerHand") {
-      this.selectFighter(card);
+      this.selectFighter(value);
     }
 
     if (name === "habitat") {
-      this.selectHabitat(card);
+      this.selectHabitat(value);
+    }
+
+    if (name === "chooseFighter") {
+      const fighter = { ...this.state.habitats[habitat].computerCards[value] };
+
+      if (this.state.currentTrait === "H") {
+        this.setState({
+          traitActionCard: fighter
+        });
+      }
+      this.trashCard(value, habitat);
+    }
+
+    if (name === "bounceHabitat") {
+      this.setState({
+        bounceHabitat: value
+      });
+    }
+
+    if (name === "Q") {
+      value === "n" ? this.endPlayedTraits() : this.playQuickGo();
+    }
+
+    if (name === "FH") {
+      value === "trash"
+        ? this.setState({ currentTrait: "F" })
+        : this.setState({ currentTrait: "H" });
     }
   };
 
@@ -138,32 +178,43 @@ class PlayScreen extends Component {
       playerHand: this.state.playerHand.map(
         (item, i) => (i !== this.state.selectedCard ? item : null)
       ),
-      selectedCard: null
+      selectedCard: null,
+      traitsList: [...card.traits]
     });
     this.checkTraits(card);
   };
 
-  togglePlayedTraits = () =>
-    this.setState({ playedTraits: !this.state.playedTraits });
+  endPlayedTraits = () => this.setState({ currentTrait: null, traitsList: [] });
 
   checkTraits = card => {
-    if (
-      card.traits.includes("FIERCE") ||
-      card.traits.includes("HEFTY") ||
-      card.traits.includes("QUICK")
-    ) {
-      this.setState({ playedTraits: true, currentTraits: card.traits });
+    if (!this.state.playerGo) {
+      this.changePlayer();
+      return;
     }
-    if (card.traits.includes("FIERCE")) {
-      //select card to trash
+    const { traits } = card;
+    if (traits.includes("FIERCE") && traits.includes("HEFTY")) {
+      this.setCurrentTrait("FH");
+      return;
     }
-    if (card.traits.includes("HEFTY")) {
-      //select card to bounce
+    if (traits.includes("FIERCE")) {
+      this.setCurrentTrait("F");
+      return;
     }
-    if (card.traits.includes("QUICK")) {
-      //choose to play another card
+    if (traits.includes("HEFTY")) {
+      this.setCurrentTrait("H");
+      return;
+    }
+    if (traits.includes("QUICK")) {
+      this.setCurrentTrait("Q");
+      return;
     }
     this.changePlayer();
+  };
+
+  setCurrentTrait = type => {
+    this.setState({
+      currentTrait: type
+    });
   };
 
   computerMove = () => {
@@ -182,9 +233,54 @@ class PlayScreen extends Component {
       }),
       computerHand: this.state.computerHand.map(
         (item, i) => (i !== index ? item : null)
-      )
+      ),
+      traitsList: card.traits
     });
     this.checkTraits(card);
+  };
+
+  setCurrentTrait = currentTrait => {
+    this.setState({
+      currentTrait
+    });
+  };
+
+  trashCard = (cardIndex, habitatIndex) => {
+    const newHabitats = this.state.habitats.reduce((acc, habitat, i) => {
+      if (i === habitatIndex) {
+        habitat.computerCards = habitat.computerCards.filter(
+          (fighter, it) => cardIndex !== it
+        );
+      }
+      acc.push(habitat);
+      return acc;
+    }, []);
+    this.setState({
+      habitats: newHabitats,
+      currentTrait: null,
+      traitsList: this.state.traitsList.filter(trait => trait !== "FIERCE")
+    });
+  };
+
+  bounceCard = (card, newHab) => {
+    const newHabitats = this.state.habitats.reduce((acc, habitat, i) => {
+      if (i === newHab) {
+        habitat.computerCards = [...habitat.computerCards, card];
+      }
+      acc.push(habitat);
+      return acc;
+    }, []);
+    this.setState({
+      habitats: newHabitats,
+      traitActionCard: null,
+      bounceHabitat: null,
+      currentTrait: null,
+      traitsList: this.state.traitsList.filter(trait => trait !== "HEFTY")
+    });
+  };
+
+  playQuickGo = () => {
+    this.endPlayedTraits();
   };
 
   render() {
@@ -195,14 +291,20 @@ class PlayScreen extends Component {
       playerHand,
       computerHand,
       playerGo,
-      selectedCard
+      selectedCard,
+      playedTraits
     } = this.state;
     return (
       <div id="playScreen">
         {this.state.activePlay && (
           <Hand hand={this.state.computerHand} title="computerHand" />
         )}
-        <HabitatView habitats={habitats} handleClick={this.handleClick} />
+        <HabitatView
+          habitats={habitats}
+          handleClick={this.handleClick}
+          playedTraits={this.state.currentTrait ? true : false}
+          active={selectedCard === null ? false : true}
+        />
         {this.state.drafting && (
           <DraftView
             draftCardsSet1={draftCardsSet1}
@@ -218,8 +320,11 @@ class PlayScreen extends Component {
             startGame={this.startGame}
           />
         )}
-        {this.state.playedTraits && (
-          <PlayedTraitsActions traits={this.state.currentTraits} />
+        {this.state.currentTrait && (
+          <TraitMessage
+            action={this.state.currentTrait}
+            handleClick={this.handleClick}
+          />
         )}
         <Hand
           hand={this.state.playerHand}

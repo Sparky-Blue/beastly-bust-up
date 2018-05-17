@@ -3,34 +3,49 @@ import "./Habitats.css";
 import cloudinary from "cloudinary-core";
 import { Image } from "cloudinary-react";
 const cloudinaryCore = new cloudinary.Cloudinary({ cloud_name: "beastlyb" });
-// const SampleImg = () => (
-//   <img src={cloudinaryCore.url('sample')} />
-// );
 
 class Habitats extends Component {
   render() {
+    const { habitats, handleClick, playedTraits, active } = this.props;
+    console.log(playedTraits);
     return (
       <div id="habitats">
-        {this.props.habitats.map((habitat, i) => {
-          console.log(habitat.img);
+        {habitats.map((habitat, hi) => {
           return (
-            <div
-              className="habitatCard"
-              id={`habitat${i}`}
-              key={habitat.name}
-              onClick={() => this.props.handleClick("habitat", i)}
-            >
+            <div className="habitatCard" id={`habitat${hi}`} key={habitat.name}>
               <div className="fighterInHabitat">
-                {habitat.computerCards.map((card, i) => (
-                  <p key={i}>{card.name}</p>
+                {habitat.computerCards.map((card, ci) => (
+                  <img
+                    src={cloudinaryCore.url(`${card.name}.png`)}
+                    alt="card.name"
+                    className="fighterInHabitatImg"
+                    onClick={
+                      playedTraits
+                        ? () => handleClick("chooseFighter", ci, hi)
+                        : null
+                    }
+                  />
                 ))}
               </div>
               <img
                 src={cloudinaryCore.url(`${habitat.img}`)}
                 className="habitatImg"
+                onClick={
+                  playedTraits
+                    ? () => handleClick("bounceHabitat", hi)
+                    : active
+                      ? () => handleClick("habitat", hi)
+                      : null
+                }
               />
               <div className="fighterInHabitat">
-                {habitat.cards.map((card, i1) => <p key={i1}>{card.name}</p>)}
+                {habitat.cards.map((card, pi) => (
+                  <img
+                    src={cloudinaryCore.url(`${card.name}.png`)}
+                    alt="card.name"
+                    className="fighterInHabitatImg"
+                  />
+                ))}
               </div>
             </div>
           );

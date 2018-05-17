@@ -2,9 +2,9 @@ import posed from "react-pose";
 import { tween, easing } from "popmotion";
 
 const config = {
-  exit: { opacity: 0 },
+  exit: { opacity: 1 },
   enter: {
-    opacity: 0
+    opacity: 1
   }
 };
 

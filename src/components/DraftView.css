@@ -1,8 +1,9 @@
 .cards {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  align-content: center;
   z-index: 1;
-  height: 30vh;
+  height: 40vh;
   width: 100vw;
   /* overflow: hidden; */
 }
@@ -10,18 +11,19 @@
 #draftCards1 {
   background: cadetblue;
 }
+
 #draftCards2 {
   background: lemonchiffon;
 }
 
 .fighters {
-  width: 15vw;
-  height: 30vh;
-  z-index: 2;
-  background: white;
-  overflow: hidden;
+  /* width: 15vw; */
+  /* height: 35vh;
+  z-index: 2; */
+  /* background: white;
+  overflow: hidden; */
 }
 
 .cardImg {
-  width: 14vw;
+  height: 40vh;
 }

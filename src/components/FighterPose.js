@@ -2,7 +2,28 @@ import posed from "react-pose";
 import { tween, easing } from "popmotion";
 
 const config = {
-  exit: { scaleY: 0, opacity: 0 },
+  // exit: { scaleY: 0, opacity: 0 },
+  // enter: {
+  //   scaleY: 1,
+  //   opacity: 1,
+  //   transition: props =>
+  //     tween({
+  //       ...props,
+  //       duration: 1000,
+  //       ease: props.key === "opacity" ? easing.anticipate : easing.linear
+  //     })
+  // }
+
+  exit: {
+    scaleY: 0,
+    opacity: 0,
+    transition: props =>
+      tween({
+        ...props,
+        duration: 1000,
+        ease: props.key === "opacity" ? easing.anticipate : easing.linear
+      })
+  },
   enter: {
     scaleY: 1,
     opacity: 1,
@@ -10,7 +31,7 @@ const config = {
       tween({
         ...props,
         duration: 1000,
-        ease: props.key === "opacity" ? easing.anticipate : easing.linear
+        ease: props.key === "opacity" ? easing.linear : easing.anticipate
       })
   }
 };

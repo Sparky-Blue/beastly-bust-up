@@ -13,176 +13,138 @@ const FIERCE = "FIERCE",
 
 const fighters = [
   {
-    name: "BOAR",
-    img:
-      "http://2.bp.blogspot.com/-bGM3srfaPkQ/T_c0EpnxrcI/AAAAAAAAAns/1Zbg69NK0Q8/s1600/octopus1.jpg",
+    name: "Boar",
     habitat: "forest",
     traits: [FIERCE],
     // traits: { FIERCE: "GORE" },
     rank: 3
   },
   {
-    name: "CAMEL",
-    img:
-      "http://2.bp.blogspot.com/-bGM3srfaPkQ/T_c0EpnxrcI/AAAAAAAAAns/1Zbg69NK0Q8/s1600/octopus1.jpg",
+    name: "Camel",
     habitat: "dessert",
     traits: [QUICK.TOUGH],
     // traits: { QUICK: "HURRY", TOUGH: "STUBBORN" },
     rank: 3
   },
   {
-    name: "CAT",
-    img:
-      "http://2.bp.blogspot.com/-bGM3srfaPkQ/T_c0EpnxrcI/AAAAAAAAAns/1Zbg69NK0Q8/s1600/octopus1.jpg",
+    name: "Cat",
     habitat: "nigth",
     traits: [AGILE, UNRELIABLE],
     // traits: { AGILE: "WRIGGLE", UNRELIABLE: "SELFISH" },
     rank: 2
   },
   {
-    name: "CHAMELEON",
-    img:
-      "http://2.bp.blogspot.com/-bGM3srfaPkQ/T_c0EpnxrcI/AAAAAAAAAns/1Zbg69NK0Q8/s1600/octopus1.jpg",
+    name: "Chameleon",
     habitat: "rainforest",
     traits: [FANCY],
     // traits: { FANCY: "GAUDY" },
     rank: 1
   },
   {
-    name: "CHEETAH",
-    img:
-      "http://2.bp.blogspot.com/-bGM3srfaPkQ/T_c0EpnxrcI/AAAAAAAAAns/1Zbg69NK0Q8/s1600/octopus1.jpg",
+    name: "Cheetah",
     habitat: "savanna",
     traits: [QUICK, AGILE],
     // traits: { QUICK: "SPRINT", AGILE: "SPRING" },
     rank: 4
   },
   {
-    name: "CHICKEN",
-    img:
-      "http://2.bp.blogspot.com/-bGM3srfaPkQ/T_c0EpnxrcI/AAAAAAAAAns/1Zbg69NK0Q8/s1600/octopus1.jpg",
+    name: "Chicken",
     habitat: "field",
     traits: [AGILE, UNRELIABLE],
     // traits: { AGILE: "FLAP", UNRELIABLE: "SQUAWK" },
     rank: 1
   },
   {
-    name: "CHIMPANZEE",
-    img:
-      "http://2.bp.blogspot.com/-bGM3srfaPkQ/T_c0EpnxrcI/AAAAAAAAAns/1Zbg69NK0Q8/s1600/octopus1.jpg",
+    name: "Chimpanzee",
     habitat: "rainforest",
     traits: [AGILE],
     // traits: { AGILE: "CLIMB" },
     rank: 3
   },
   {
-    name: "COBRA",
-    img:
-      "http://2.bp.blogspot.com/-bGM3srfaPkQ/T_c0EpnxrcI/AAAAAAAAAns/1Zbg69NK0Q8/s1600/octopus1.jpg",
+    name: "Cobra",
     habitat: "forest",
     traits: [FIERCE, HORNS],
     // traits: { FIERCE: "STRIKE", HORNS: "VENOM" },
     rank: 4
   },
   {
-    name: "COW",
-    img:
-      "http://2.bp.blogspot.com/-bGM3srfaPkQ/T_c0EpnxrcI/AAAAAAAAAns/1Zbg69NK0Q8/s1600/octopus1.jpg",
+    name: "Cow",
     habitat: "field",
     traits: [HEFTY],
     // traits: { HEFTY: "BARGE" },
     rank: 1
   },
   {
-    name: "CRAB",
-    img:
-      "http://2.bp.blogspot.com/-bGM3srfaPkQ/T_c0EpnxrcI/AAAAAAAAAns/1Zbg69NK0Q8/s1600/octopus1.jpg",
+    name: "Crab",
     habitat: "beach",
     traits: [TOUGH, UNRELIABLE],
     // traits: { TOUGH: "SHELL", UNRELIABLE: "HIDE" },
     rank: 2
   },
   {
-    name: "CROCODILE",
-    img:
-      "http://2.bp.blogspot.com/-bGM3srfaPkQ/T_c0EpnxrcI/AAAAAAAAAns/1Zbg69NK0Q8/s1600/octopus1.jpg",
+    name: "Crocodile",
     habitat: "swamp",
     traits: [FIERCE, TOUGH, AQUATIC],
     // traits: { FIERCE: "SNAP", TOUGH: "LEATHERY", AQUATIC: "FLOAT" },
     rank: 5
   },
   {
-    name: "DOG",
-    img:
-      "http://2.bp.blogspot.com/-bGM3srfaPkQ/T_c0EpnxrcI/AAAAAAAAAns/1Zbg69NK0Q8/s1600/octopus1.jpg",
+    name: "Dog",
     habitat: "urban street",
     traits: [BRAVE],
     // traits: { BRAVE: "LOYAL" },
     rank: 3
   },
   {
-    name: "DOLPHIN",
-    img:
-      "http://2.bp.blogspot.com/-bGM3srfaPkQ/T_c0EpnxrcI/AAAAAAAAAns/1Zbg69NK0Q8/s1600/octopus1.jpg",
+    name: "Dolphin",
     habitat: "sea",
     traits: [QUICK, BRAVE, AQUATIC],
     // traits: { QUICK: "RAPID", BRAVE: "BOLD", AQUATIC: "SWIM" },
     rank: 3
   },
+  // {
+  //   name: "Eagle",
+  //   habitat: "mountains",
+  //   traits: [FIERCE],
+  //   // traits: { FIERCE: "TALONS" },
+  //   rank: 4
+  // },
   {
-    name: "EAGLE",
-    img:
-      "http://2.bp.blogspot.com/-bGM3srfaPkQ/T_c0EpnxrcI/AAAAAAAAAns/1Zbg69NK0Q8/s1600/octopus1.jpg",
-    habitat: "mountains",
-    traits: [FIERCE],
-    // traits: { FIERCE: "TALONS" },
-    rank: 4
-  },
-  {
-    name: "ELEPHANT",
-    img:
-      "http://2.bp.blogspot.com/-bGM3srfaPkQ/T_c0EpnxrcI/AAAAAAAAAns/1Zbg69NK0Q8/s1600/octopus1.jpg",
+    name: "Elephant",
     habitat: "savanna",
     traits: [HEFTY, HORNS],
     // traits: { HEFTY: "SQUASH", HORNS: "TUSKS" },
     rank: 4
-  },
-  {
-    name: "FALCON",
-    img:
-      "http://2.bp.blogspot.com/-bGM3srfaPkQ/T_c0EpnxrcI/AAAAAAAAAns/1Zbg69NK0Q8/s1600/octopus1.jpg",
-    habitat: "hills",
-    traits: [QUICK, FLY],
-    // traits: { QUICK: "DIVE", FLY: "FLY" },
-    rank: 3
-  },
-  {
-    name: "GIRAFFE",
-    img:
-      "http://2.bp.blogspot.com/-bGM3srfaPkQ/T_c0EpnxrcI/AAAAAAAAAns/1Zbg69NK0Q8/s1600/octopus1.jpg",
-    habitat: "savanna",
-    traits: [QUICK, HEFTY],
-    // traits: { QUICK: "RUN", HEFTY: "SCATTER" },
-    rank: 2
-  },
-  {
-    name: "GOAT",
-    img:
-      "http://2.bp.blogspot.com/-bGM3srfaPkQ/T_c0EpnxrcI/AAAAAAAAAns/1Zbg69NK0Q8/s1600/octopus1.jpg",
-    habitat: "foothills",
-    traits: [BRAVE, HORNS],
-    // traits: { BRAVE: "BUTT", HORNS: "HORNS" },
-    rank: 2
-  },
-  {
-    name: "GORILLA",
-    img:
-      "http://2.bp.blogspot.com/-bGM3srfaPkQ/T_c0EpnxrcI/AAAAAAAAAns/1Zbg69NK0Q8/s1600/octopus1.jpg",
-    habitat: "rainforest",
-    traits: [AGILE, TOUGH],
-    // traits: { AGILE: "CLIMB", TOUGH: "GRITTY" },
-    rank: 5
   }
+  // {
+  //   name: "Falcon",
+  //   habitat: "hills",
+  //   traits: [QUICK, FLY],
+  //   // traits: { QUICK: "DIVE", FLY: "FLY" },
+  //   rank: 3
+  // },
+  // {
+  //   name: "GIRAFFE",
+  //   habitat: "savanna",
+  //   traits: [QUICK, HEFTY],
+  //   // traits: { QUICK: "RUN", HEFTY: "SCATTER" },
+  //   rank: 2
+  // },
+  // {
+  //   name: "GOAT",
+  //   habitat: "foothills",
+  //   traits: [BRAVE, HORNS],
+  //   // traits: { BRAVE: "BUTT", HORNS: "HORNS" },
+  //   rank: 2
+  // },
+  // {
+  //   name: "GORILLA",
+  //   habitat: "rainforest",
+  //   traits: [AGILE, TOUGH],
+  //   // traits: { AGILE: "CLIMB", TOUGH: "GRITTY" },
+  //   rank: 5
+  // }
   // ,
   // {
   //   name: "GRIZZLY",

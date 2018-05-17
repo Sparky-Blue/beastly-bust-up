@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import FighterPose from "./FighterPose";
+import cloudinary from "cloudinary-core";
+const cloudinaryCore = new cloudinary.Cloudinary({ cloud_name: "beastlyb" });
 
 class Fighters extends Component {
   render() {
     const card = this.props.card;
     return (
-      <FighterPose className="fighters">
-        <h3>{card.name}</h3>
-        <p>{card.habitat}</p>
-        <img src={card.img} alt={card.name} className="cardImg" />
-        {card.traits.map((trait, i) => <p key={i}>{trait}</p>)}
-      </FighterPose>
+      <img
+        src={cloudinaryCore.url(`${card.name}.png`)}
+        alt={card.name}
+        className="cardImg"
+      />
     );
   }
 }
-
 export default Fighters;

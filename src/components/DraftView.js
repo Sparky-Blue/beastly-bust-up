@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { PoseGroup } from "react-pose";
 import "./DraftView.css";
-import CardPose from "./CardPose";
+import FighterPose from "./FighterPose";
 import SliderPose from "./SliderPose";
+import Fighters from "./Fighters";
 
 class DraftView extends Component {
   state = { cardSet1: true };
@@ -31,18 +32,14 @@ class DraftView extends Component {
           {this.props[cardSet1 ? "draftCardsSet1" : "draftCardsSet2"].map(
             (draft, i) => {
               return (
-                <CardPose
+                <FighterPose
                   className="fighters"
                   id={`draft${i}`}
                   key={draft.name}
                   onClick={() => this.selectCard(i)}
                 >
-                  <h3>{draft.name}</h3>
-                  <p>{draft.rank}</p>
-                  <p>{draft.habitat}</p>
-                  <img src={draft.img} alt={draft.name} className="cardImg" />
-                  {draft.traits.map((trait, i2) => <p key={i2}>{trait}</p>)}
-                </CardPose>
+                  <Fighters card={draft} />
+                </FighterPose>
               );
             }
           )}

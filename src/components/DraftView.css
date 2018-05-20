@@ -3,7 +3,7 @@
   justify-content: space-around;
   align-content: center;
   z-index: 1;
-  height: 40vh;
+  height: 30vh;
   width: 100vw;
   /* overflow: hidden; */
 }
@@ -25,5 +25,5 @@
 }
 
 .cardImg {
-  height: 40vh;
+  height: 30vh;
 }

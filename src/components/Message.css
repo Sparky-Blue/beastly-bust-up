@@ -1,0 +1,9 @@
+.showMessage {
+  height: 50vh;
+  width: 50vw;
+  background: wheat;
+  z-index: 3;
+  position: fixed;
+  top: 10vh;
+  left: 25vw;
+}

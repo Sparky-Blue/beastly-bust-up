@@ -28,7 +28,6 @@ class GameStart extends Component {
 
   setStartPlayer = () => {
     const { playerRank, computerRank } = this.state;
-    console.log({ playerRank }, { computerRank });
     playerRank < computerRank && this.props.changePlayer();
   };
 
@@ -39,7 +38,7 @@ class GameStart extends Component {
         startPlayer={playerRank >= computerRank ? "player" : "computer"}
         playerRank={playerRank}
         computerRank={computerRank}
-        startGame={this.props.startGame}
+        changeStage={this.props.changeStage}
       />
     );
   }

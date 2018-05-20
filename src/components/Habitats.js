@@ -1,13 +1,18 @@
 import React, { Component } from "react";
 import "./Habitats.css";
 import cloudinary from "cloudinary-core";
-import { Image } from "cloudinary-react";
+// import { Image } from "cloudinary-react";
 const cloudinaryCore = new cloudinary.Cloudinary({ cloud_name: "beastlyb" });
 
 class Habitats extends Component {
   render() {
-    const { habitats, handleClick, playedTraits, active } = this.props;
-    console.log(playedTraits);
+    const {
+      habitats,
+      handleClick,
+      playedTraits,
+      active,
+      currentHabitat
+    } = this.props;
     return (
       <div id="habitats">
         {habitats.map((habitat, hi) => {
@@ -17,10 +22,10 @@ class Habitats extends Component {
                 {habitat.computerCards.map((card, ci) => (
                   <img
                     src={cloudinaryCore.url(`${card.name}.png`)}
-                    alt="card.name"
+                    alt={card.name}
                     className="fighterInHabitatImg"
                     onClick={
-                      playedTraits
+                      playedTraits && currentHabitat.name === habitat.name
                         ? () => handleClick("chooseFighter", ci, hi)
                         : null
                     }
@@ -29,6 +34,7 @@ class Habitats extends Component {
               </div>
               <img
                 src={cloudinaryCore.url(`${habitat.img}`)}
+                alt={habitat.name}
                 className="habitatImg"
                 onClick={
                   playedTraits
@@ -42,7 +48,7 @@ class Habitats extends Component {
                 {habitat.cards.map((card, pi) => (
                   <img
                     src={cloudinaryCore.url(`${card.name}.png`)}
-                    alt="card.name"
+                    alt={card.name}
                     className="fighterInHabitatImg"
                   />
                 ))}

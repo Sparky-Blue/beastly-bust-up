@@ -15,13 +15,19 @@ class App extends Component {
     });
   };
 
+  newGame = () => {
+    this.setState({
+      selected: false
+    });
+  };
+
   render() {
     const selected = this.state.selected;
     return (
       <div className="App">
         <Header />
         {selected ? (
-          <PlayScreen />
+          <PlayScreen newGame={this.newGame} />
         ) : (
           <StartScreen start={this.startPlayerVComputer} />
         )}

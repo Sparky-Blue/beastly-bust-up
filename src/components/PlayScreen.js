@@ -3,11 +3,11 @@ import HabitatView from "./HabitatView";
 import Hand from "./Hand";
 import DraftView from "./DraftView";
 import GameStart from "./GameStart";
-import Winner from "./Winner";
+import Message from "./Message";
+import Result from "./Result";
 import TraitMessage from "./TraitMessage";
 import habitatsData from "../cardsData/habitats";
 import fightersData from "../cardsData/fighters";
-
 import { getRandomCards } from "../utils";
 
 class PlayScreen extends Component {
@@ -17,15 +17,15 @@ class PlayScreen extends Component {
     draftCardsSet2: [],
     playerHand: [],
     computerHand: [],
-    startScreen: false,
-    drafting: true,
-    activePlay: false,
+    stage: "drafting",
     playerGo: true,
-    chooseHabitat: false,
+    currentHabitat: null,
     selectedCard: null,
     bounceHabitat: null,
     traitActionCard: null,
-    currentTrait: null
+    currentTrait: null,
+    showMessage: null,
+    secondQuickCard: false
   };
 
   componentDidMount() {
@@ -35,19 +35,12 @@ class PlayScreen extends Component {
 
   componentDidUpdate(newProps, prevState) {
     if (prevState.playerHand.length === 5 && this.state.playerHand.length === 6)
-      this.startScreenActivate();
+      this.changeStage("startScreen");
+
     if (
-      prevState.playerGo === true &&
+      this.state.stage === "activePlay" &&
       this.state.playerGo === false &&
-      this.state.activePlay === true
-    ) {
-      this.computerMove();
-      return;
-    }
-    if (
-      prevState.activePlay === false &&
-      this.state.activePlay === true &&
-      this.state.playerGo === false
+      (prevState.playerGo === true || prevState.stage !== "activePlay")
     )
       this.computerMove();
     if (
@@ -57,10 +50,17 @@ class PlayScreen extends Component {
     ) {
       this.bounceCard(this.state.traitActionCard, this.state.bounceHabitat);
     }
-    if (prevState.currentTrait !== null && this.state.currentTrait === null) {
-      this.checkTraits({ traits: [...this.state.traitsList] });
+
+    if (this.state.playerGo !== prevState.playerGo) {
+      this.checkGameEnd();
     }
   }
+
+  changeStage = stage => {
+    this.setState({
+      stage
+    });
+  };
 
   getHabitats = () => {
     const habitatIndexes = getRandomCards(4, habitatsData.length);
@@ -93,7 +93,7 @@ class PlayScreen extends Component {
   };
 
   addPlayerCard = (set, card) => {
-    const { playerHand, draftCardsSet1 } = this.state;
+    const { playerHand } = this.state;
     this.addComputerCard();
     this.setState({
       playerHand: [...playerHand, this.state[set][card]]
@@ -107,22 +107,18 @@ class PlayScreen extends Component {
     });
   };
 
-  startScreenActivate = () =>
-    this.setState({
-      drafting: false,
-      startScreen: true
-    });
-
-  startGame = () =>
-    this.setState({
-      startScreen: false,
-      activePlay: true
-    });
-
   changePlayer = () => {
     this.setState({
       playerGo: !this.state.playerGo
     });
+  };
+
+  checkGameEnd = () => {
+    const hand1 = this.state.playerHand.reduce((acc, card) => {
+      if (card !== null) acc = false;
+      return acc;
+    }, true);
+    hand1 && this.changeStage("result");
   };
 
   handleClick = (name, value, habitat) => {
@@ -151,14 +147,31 @@ class PlayScreen extends Component {
       });
     }
 
+    if (name === "restartGo") {
+      this.setState({
+        showMessage: null
+      });
+    }
+
     if (name === "Q") {
-      value === "n" ? this.endPlayedTraits() : this.playQuickGo();
+      value === "n"
+        ? this.setState({
+            currentTrait: null,
+            traitsList: [],
+            selectedCard: null,
+            currentHabitat: null
+          })
+        : this.playQuickGo();
     }
 
     if (name === "FH") {
       value === "trash"
         ? this.setState({ currentTrait: "F" })
         : this.setState({ currentTrait: "H" });
+    }
+
+    if (name === "restart") {
+      this.props.newGame();
     }
   };
 
@@ -170,6 +183,15 @@ class PlayScreen extends Component {
 
   selectHabitat = index => {
     const card = this.state.playerHand[this.state.selectedCard];
+    const habitat = { ...this.state.habitats[index] };
+    const legalMove = this.checkHabitatSize(card, habitat);
+    if (!legalMove) {
+      this.setState({
+        showMessage: "Habitat already full",
+        selectedCard: null
+      });
+      return;
+    }
     this.setState({
       habitats: this.state.habitats.map((habitat, i) => {
         if (index === i) habitat.cards.push(card);
@@ -179,35 +201,43 @@ class PlayScreen extends Component {
         (item, i) => (i !== this.state.selectedCard ? item : null)
       ),
       selectedCard: null,
+      currentHabitat: habitat,
       traitsList: [...card.traits]
     });
-    this.checkTraits(card);
+    this.checkTraits(card, habitat);
   };
 
-  endPlayedTraits = () => this.setState({ currentTrait: null, traitsList: [] });
-
-  checkTraits = card => {
+  checkTraits = (
+    card = { traits: [...this.state.traitsList] },
+    habitat = this.state.currentHabitat
+  ) => {
     if (!this.state.playerGo) {
       this.changePlayer();
       return;
     }
     const { traits } = card;
-    if (traits.includes("FIERCE") && traits.includes("HEFTY")) {
-      this.setCurrentTrait("FH");
-      return;
+    const { computerCards } = habitat;
+    if (computerCards.length !== 0) {
+      if (traits.includes("FIERCE") && traits.includes("HEFTY")) {
+        this.setCurrentTrait("FH");
+        return;
+      }
+      if (traits.includes("FIERCE")) {
+        this.setCurrentTrait("F");
+        return;
+      }
+      if (traits.includes("HEFTY")) {
+        this.setCurrentTrait("H");
+        return;
+      }
     }
-    if (traits.includes("FIERCE")) {
-      this.setCurrentTrait("F");
-      return;
-    }
-    if (traits.includes("HEFTY")) {
-      this.setCurrentTrait("H");
-      return;
-    }
-    if (traits.includes("QUICK")) {
+    if (traits.includes("QUICK") && this.state.secondQuickCard !== null) {
       this.setCurrentTrait("Q");
       return;
     }
+    this.setState({
+      secondQuickCard: false
+    });
     this.changePlayer();
   };
 
@@ -218,14 +248,23 @@ class PlayScreen extends Component {
   };
 
   computerMove = () => {
-    const { computerHand } = this.state;
-    const habitatIndex = Math.floor(Math.random() * 3);
+    const { computerHand, habitats } = this.state;
     const index = computerHand.reduce((acc, card, i) => {
       if (card !== null) acc = i;
       return acc;
     }, -1);
     if (index === -1) return;
     const card = computerHand[index];
+    const habitatIndex = habitats.reduce((acc, habitat, i) => {
+      if (
+        habitat.computerCards.length + habitat.cards.length >= 4 &&
+        habitat.name !== card.habitat
+      )
+        return acc;
+      acc = i;
+      return acc;
+    }, 0);
+    const habitat = habitats[habitatIndex];
     this.setState({
       habitats: this.state.habitats.map((habitat, i) => {
         if (habitatIndex === i) habitat.computerCards.push(card);
@@ -233,19 +272,14 @@ class PlayScreen extends Component {
       }),
       computerHand: this.state.computerHand.map(
         (item, i) => (i !== index ? item : null)
-      ),
-      traitsList: card.traits
+      )
     });
-    this.checkTraits(card);
-  };
-
-  setCurrentTrait = currentTrait => {
-    this.setState({
-      currentTrait
-    });
+    this.checkTraits(card, habitat);
   };
 
   trashCard = (cardIndex, habitatIndex) => {
+    const habitat = this.state.habitats[habitatIndex];
+    const card = habitat.computerCards[cardIndex];
     const newHabitats = this.state.habitats.reduce((acc, habitat, i) => {
       if (i === habitatIndex) {
         habitat.computerCards = habitat.computerCards.filter(
@@ -255,11 +289,19 @@ class PlayScreen extends Component {
       acc.push(habitat);
       return acc;
     }, []);
+    if (this.state.currentTrait === "H") {
+      this.setState({
+        habitats: [...newHabitats],
+        showMessage: "Choose a habitat to bounce to"
+      });
+      return;
+    }
     this.setState({
-      habitats: newHabitats,
+      habitats: [...newHabitats],
       currentTrait: null,
       traitsList: this.state.traitsList.filter(trait => trait !== "FIERCE")
     });
+    this.checkTraits(card, habitat);
   };
 
   bounceCard = (card, newHab) => {
@@ -271,16 +313,31 @@ class PlayScreen extends Component {
       return acc;
     }, []);
     this.setState({
-      habitats: newHabitats,
+      habitats: [...newHabitats],
       traitActionCard: null,
       bounceHabitat: null,
       currentTrait: null,
       traitsList: this.state.traitsList.filter(trait => trait !== "HEFTY")
     });
+    this.checkTraits(card);
   };
 
   playQuickGo = () => {
-    this.endPlayedTraits();
+    this.setState({
+      showMessage: "Please choose another card",
+      secondQuickCard: true,
+      selectedCard: null,
+      currentHabitat: null,
+      currentTrait: null,
+      playerGo: true,
+      traitsList: []
+    });
+  };
+
+  checkHabitatSize = (fighter, habitat) => {
+    if (habitat.name === fighter.habitat) return true;
+    if (habitat.computerCards.length + habitat.cards.length >= 4) return false;
+    return true;
   };
 
   render() {
@@ -292,11 +349,11 @@ class PlayScreen extends Component {
       computerHand,
       playerGo,
       selectedCard,
-      playedTraits
+      currentHabitat
     } = this.state;
     return (
       <div id="playScreen">
-        {this.state.activePlay && (
+        {this.state.stage === "activePlay" && (
           <Hand hand={this.state.computerHand} title="computerHand" />
         )}
         <HabitatView
@@ -304,25 +361,32 @@ class PlayScreen extends Component {
           handleClick={this.handleClick}
           playedTraits={this.state.currentTrait ? true : false}
           active={selectedCard === null ? false : true}
+          currentHabitat={currentHabitat}
         />
-        {this.state.drafting && (
+        {this.state.stage === "drafting" && (
           <DraftView
             draftCardsSet1={draftCardsSet1}
             draftCardsSet2={draftCardsSet2}
             addPlayerCard={this.addPlayerCard}
           />
         )}
-        {this.state.startScreen && (
+        {this.state.stage === "startScreen" && (
           <GameStart
             playerHand={playerHand}
             computerHand={computerHand}
             changePlayer={this.changePlayer}
-            startGame={this.startGame}
+            changeStage={this.changeStage}
           />
         )}
         {this.state.currentTrait && (
           <TraitMessage
             action={this.state.currentTrait}
+            handleClick={this.handleClick}
+          />
+        )}
+        {this.state.showMessage && (
+          <Message
+            showMessage={this.state.showMessage}
             handleClick={this.handleClick}
           />
         )}
@@ -333,7 +397,9 @@ class PlayScreen extends Component {
           handleClick={this.handleClick}
           selectedCard={selectedCard}
         />
-        <Winner />
+        {this.state.stage === "result" && (
+          <Result habitats={habitats} handleClick={this.handleClick} />
+        )}
       </div>
     );
   }

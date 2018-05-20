@@ -1,41 +1,62 @@
+const HABITATS = {
+  Caves: "Caves",
+  Desert: "Desert",
+  Field: "Field",
+  Foothills: "Foothills",
+  Forest: "Forest",
+  Hills: "Hills",
+  Ice_Floes: "Ice_Floes",
+  Jungle: "Jungle",
+  Nocturnal: "Nocturnal",
+  Ocean: "Ocean",
+  Peaks: "Peaks",
+  Plains: "Plains",
+  River: "River",
+  Shore: "Shore",
+  Swamp: "Swamp",
+  Tundra: "Tundra",
+  UnderSea: "UnderSea",
+  Urban: "Urban"
+};
+
 const habitats = [
   {
-    name: "caves",
+    name: "Caves",
     points: 2,
     img: "Cave.png",
     cards: [],
     computerCards: []
   },
   {
-    name: "desert",
+    name: "Desert",
     points: 4,
     img: "Desert.png",
     cards: [],
     computerCards: []
   },
   {
-    name: "field",
+    name: "Field",
     points: 1,
     img: "Field.png",
     cards: [],
     computerCards: []
   },
   {
-    name: "foothills",
+    name: "Foothills",
     points: 3,
     img: "Foothills.png",
     cards: [],
     computerCards: []
   },
   {
-    name: "forest",
+    name: "Forest",
     points: 2,
     img: "Forest.png",
     cards: [],
     computerCards: []
   },
   {
-    name: "hills",
+    name: "Hills",
     points: 2,
     img: "Hills.png",
     cards: [],

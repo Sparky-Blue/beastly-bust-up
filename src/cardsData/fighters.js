@@ -11,115 +11,136 @@ const FIERCE = "FIERCE",
   FANCY = "FANCY",
   DIRTY = "DIRTY";
 
+const HABITATS = {
+  Caves: "Caves",
+  Desert: "Desert",
+  Field: "Field",
+  Foothills: "Foothills",
+  Forest: "Forest",
+  Hills: "Hills",
+  Ice_Floes: "Ice_Floes",
+  Jungle: "Jungle",
+  Nocturnal: "Nocturnal",
+  Ocean: "Ocean",
+  Peaks: "Peaks",
+  Plains: "Plains",
+  River: "River",
+  Shore: "Shore",
+  Swamp: "Swamp",
+  Tundra: "Tundra",
+  UnderSea: "UnderSea",
+  Urban: "Urban"
+};
+
 const fighters = [
   {
     name: "Boar",
-    habitat: "forest",
+    habitat: HABITATS.Forest,
     traits: [FIERCE],
     // traits: { FIERCE: "GORE" },
     rank: 3
   },
   {
     name: "Camel",
-    habitat: "dessert",
+    habitat: HABITATS.Desert,
     traits: [QUICK.TOUGH],
     // traits: { QUICK: "HURRY", TOUGH: "STUBBORN" },
     rank: 3
   },
   {
     name: "Cat",
-    habitat: "nigth",
+    habitat: HABITATS.Nocturnal,
     traits: [AGILE, UNRELIABLE],
     // traits: { AGILE: "WRIGGLE", UNRELIABLE: "SELFISH" },
     rank: 2
   },
   {
     name: "Chameleon",
-    habitat: "rainforest",
+    habitat: HABITATS.Jungle,
     traits: [FANCY],
     // traits: { FANCY: "GAUDY" },
     rank: 1
   },
   {
     name: "Cheetah",
-    habitat: "savanna",
+    habitat: HABITATS.Plains,
     traits: [QUICK, AGILE],
     // traits: { QUICK: "SPRINT", AGILE: "SPRING" },
     rank: 4
   },
   {
     name: "Chicken",
-    habitat: "field",
+    habitat: HABITATS.Field,
     traits: [AGILE, UNRELIABLE],
     // traits: { AGILE: "FLAP", UNRELIABLE: "SQUAWK" },
     rank: 1
   },
   {
     name: "Chimpanzee",
-    habitat: "rainforest",
+    habitat: HABITATS.Jungle,
     traits: [AGILE],
     // traits: { AGILE: "CLIMB" },
     rank: 3
   },
   {
     name: "Cobra",
-    habitat: "forest",
+    habitat: HABITATS.Forest,
     traits: [FIERCE, HORNS],
     // traits: { FIERCE: "STRIKE", HORNS: "VENOM" },
     rank: 4
   },
   {
     name: "Cow",
-    habitat: "field",
+    habitat: HABITATS.Field,
     traits: [HEFTY],
     // traits: { HEFTY: "BARGE" },
     rank: 1
   },
   {
     name: "Crab",
-    habitat: "beach",
+    habitat: HABITATS.Shore,
     traits: [TOUGH, UNRELIABLE],
     // traits: { TOUGH: "SHELL", UNRELIABLE: "HIDE" },
     rank: 2
   },
   {
     name: "Crocodile",
-    habitat: "swamp",
+    habitat: HABITATS.Swamp,
     traits: [FIERCE, TOUGH, AQUATIC],
     // traits: { FIERCE: "SNAP", TOUGH: "LEATHERY", AQUATIC: "FLOAT" },
     rank: 5
   },
   {
     name: "Dog",
-    habitat: "urban street",
+    habitat: HABITATS.Urban,
     traits: [BRAVE],
     // traits: { BRAVE: "LOYAL" },
     rank: 3
   },
   {
     name: "Dolphin",
-    habitat: "sea",
+    habitat: HABITATS.Ocean,
     traits: [QUICK, BRAVE, AQUATIC],
     // traits: { QUICK: "RAPID", BRAVE: "BOLD", AQUATIC: "SWIM" },
     rank: 3
   },
   // {
   //   name: "Eagle",
-  //   habitat: "mountains",
+  //   habitat: HABITATS."mountains",
   //   traits: [FIERCE],
   //   // traits: { FIERCE: "TALONS" },
   //   rank: 4
   // },
   {
     name: "Elephant",
-    habitat: "savanna",
+    habitat: HABITATS.Plains,
     traits: [HEFTY, HORNS],
     // traits: { HEFTY: "SQUASH", HORNS: "TUSKS" },
     rank: 4
   }
   // {
   //   name: "Falcon",
-  //   habitat: "hills",
+  //   habitat: HABITATS."hills",
   //   traits: [QUICK, FLY],
   //   // traits: { QUICK: "DIVE", FLY: "FLY" },
   //   rank: 3

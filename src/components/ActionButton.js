@@ -1,8 +1,8 @@
 import React from "react";
 
-const ActionButton = ({ title, func }) => {
+const ActionButton = ({ title, func, name }) => {
   return (
-    <button className="actionButton" onClick={() => func()}>
+    <button className="actionButton" onClick={() => func(name)}>
       {title}
     </button>
   );

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import Fighters from "./Fighters";
 import { PoseGroup } from "react-pose";
 import FighterPose from "./FighterPose";
@@ -42,7 +42,10 @@ class Hand extends Component {
                   <Fighters card={card} />
                 ) : (
                   <div>
-                    <img src={cloudinaryCore.url(`Background.png`)} />
+                    <img
+                      src={cloudinaryCore.url(`Background.png`)}
+                      alt="card back design"
+                    />
                   </div>
                 )}
               </FighterPose>

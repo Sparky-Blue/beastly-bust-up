@@ -43,13 +43,13 @@ class PlayScreen extends Component {
       (prevState.playerGo === true || prevState.stage !== "activePlay")
     )
       this.computerMove();
-    if (
-      prevState.bounceHabitat === null &&
-      this.state.bounceHabitat !== null &&
-      this.state.currentTrait === "H"
-    ) {
-      this.bounceCard(this.state.traitActionCard, this.state.bounceHabitat);
-    }
+    // if (
+    //   prevState.bounceHabitat === null &&
+    //   this.state.bounceHabitat !== null &&
+    //   this.state.currentTrait === "H"
+    // ) {
+    //   this.bounceCard(this.state.traitActionCard, this.state.bounceHabitat);
+    // }
 
     if (this.state.playerGo !== prevState.playerGo) {
       this.checkGameEnd();
@@ -138,13 +138,13 @@ class PlayScreen extends Component {
           traitActionCard: fighter
         });
       }
-      this.trashCard(value, habitat);
     }
 
     if (name === "bounceHabitat") {
       this.setState({
         bounceHabitat: value
       });
+      this.bounceCard(this.state.traitActionCard);
     }
 
     if (name === "restartGo") {
@@ -238,7 +238,7 @@ class PlayScreen extends Component {
     this.setState({
       secondQuickCard: false
     });
-    this.changePlayer();
+    // this.changePlayer();
   };
 
   setCurrentTrait = type => {
@@ -283,19 +283,20 @@ class PlayScreen extends Component {
     const newHabitats = this.state.habitats.reduce((acc, habitat, i) => {
       if (i === habitatIndex) {
         habitat.computerCards = habitat.computerCards.filter(
-          (fighter, it) => cardIndex !== it
+          (fighter, index) =>
+            cardIndex !== index && !fighter.traits.includes("TOUGH")
         );
       }
       acc.push(habitat);
       return acc;
     }, []);
-    if (this.state.currentTrait === "H") {
-      this.setState({
-        habitats: [...newHabitats],
-        showMessage: "Choose a habitat to bounce to"
-      });
-      return;
-    }
+    // if (this.state.currentTrait === "H") {
+    //   this.setState({
+    //     habitats: [...newHabitats],
+    //     showMessage: "Choose a habitat to bounce to"
+    //   });
+    //   return;
+    // }
     this.setState({
       habitats: [...newHabitats],
       currentTrait: null,
@@ -304,10 +305,19 @@ class PlayScreen extends Component {
     this.checkTraits(card, habitat);
   };
 
-  bounceCard = (card, newHab) => {
+  bounceCard = card => {
+    //when fighter is selected should prompt to choose habitat but not, should not call this function untill figher and habitat selected. crashing!
+    const newHab = this.state.bounceHabitat;
+    const { currentHabitat } = this.state;
     const newHabitats = this.state.habitats.reduce((acc, habitat, i) => {
-      if (i === newHab) {
-        habitat.computerCards = [...habitat.computerCards, card];
+      if (habitat.name === currentHabitat.name) {
+        habitat.computerCards = habitat.computerCards.filter(
+          fighter =>
+            card.name !== fighter.name && !fighter.traits.includes("AGILE")
+        );
+        if (i === newHab) {
+          habitat.computerCards = [...habitat.computerCards, card];
+        }
       }
       acc.push(habitat);
       return acc;
@@ -397,6 +407,7 @@ class PlayScreen extends Component {
           handleClick={this.handleClick}
           selectedCard={selectedCard}
         />
+        <button onClick={() => this.changePlayer()}>Change Player</button>
         {this.state.stage === "result" && (
           <Result habitats={habitats} handleClick={this.handleClick} />
         )}

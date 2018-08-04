@@ -3,26 +3,20 @@ import "./App.css";
 import Header from "./components/Header";
 import StartScreen from "./components/StartScreen";
 import PlayScreen from "./components/PlayScreen";
+import { connect } from "react-redux";
+import { startToggle } from "./store/actions/modals";
 
-class App extends Component {
-  state = {
-    selected: false
-  };
-
+class AppClass extends Component {
   startPlayerVComputer = () => {
-    this.setState({
-      selected: true
-    });
+    this.props.toggleStart();
   };
 
   newGame = () => {
-    this.setState({
-      selected: false
-    });
+    this.props.toggleStart();
   };
 
   render() {
-    const selected = this.state.selected;
+    const selected = this.props.StartModalOpen;
     return (
       <div className="App">
         <Header />
@@ -35,5 +29,16 @@ class App extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({ StartModalOpen: state.modals.startOpen });
+
+const mapDispatchToProps = dispatch => ({
+  toggleStart: () => dispatch(startToggle())
+});
+
+const App = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppClass);
 
 export default App;

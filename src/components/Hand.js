@@ -15,43 +15,41 @@ class Hand extends Component {
   render() {
     return (
       <div className="cards" id={this.props.title}>
-        <PoseGroup
+        {/* <PoseGroup
           animateOnMount={true}
           preEnterPose={"exit"}
           enterPose={"enter"}
-        >
-          {this.props.hand.map((card, i) => {
-            return card === null ? (
-              <BlankPose className="fighters blank" key={i} />
-            ) : (
-              <FighterPose
-                className={
-                  this.props.selectedCard === i
-                    ? "fighters selected"
-                    : "fighters"
-                }
-                key={card.name}
-                id={card.name}
-                onClick={
-                  this.props.playerGo
-                    ? () => this.props.handleClick(this.props.title, i)
-                    : null
-                }
-              >
-                {this.props.title === "playerHand" ? (
-                  <Fighters card={card} />
-                ) : (
-                  <div>
-                    <img
-                      src={cloudinaryCore.url(`Background.png`)}
-                      alt="card back design"
-                    />
-                  </div>
-                )}
-              </FighterPose>
-            );
-          })}
-        </PoseGroup>
+        > */}
+        {this.props.hand.map((card, i) => {
+          return card === null ? (
+            <div className="fighters blank" key={i} />
+          ) : (
+            <div
+              className={
+                this.props.selectedCard === i ? "fighters selected" : "fighters"
+              }
+              key={card.name}
+              id={card.name}
+              onClick={
+                this.props.playerGo
+                  ? () => this.props.handleClick(this.props.title, i)
+                  : null
+              }
+            >
+              {this.props.title === "playerHand" ? (
+                <Fighters card={card} />
+              ) : (
+                <div>
+                  <img
+                    src={cloudinaryCore.url(`Background.png`)}
+                    alt="card back design"
+                  />
+                </div>
+              )}
+            </div>
+          );
+        })}
+        {/* </PoseGroup> */}
       </div>
     );
   }

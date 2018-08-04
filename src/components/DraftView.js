@@ -22,29 +22,29 @@ class DraftView extends Component {
   render() {
     const { cardSet1 } = this.state;
     return (
-      <SliderPose className="cards" id={`draftCards${cardSet1 ? "1" : "2"}`}>
-        <PoseGroup
+      <div className="cards" id={`draftCards${cardSet1 ? "1" : "2"}`}>
+        {/* <PoseGroup
           animateOnMount={true}
           preEnterPose={"exit"}
           enterPose={"enter"}
           exitPose={"exit"}
-        >
-          {this.props[cardSet1 ? "draftCardsSet1" : "draftCardsSet2"].map(
-            (draft, i) => {
-              return (
-                <FighterPose
-                  className="fighters"
-                  id={`draft${i}`}
-                  key={draft.name}
-                  onClick={() => this.selectCard(i)}
-                >
-                  <Fighters card={draft} />
-                </FighterPose>
-              );
-            }
-          )}
-        </PoseGroup>
-      </SliderPose>
+        > */}
+        {this.props[cardSet1 ? "draftCardsSet1" : "draftCardsSet2"].map(
+          (draft, i) => {
+            return (
+              <div
+                className="fighters"
+                id={`draft${i}`}
+                key={draft.name}
+                onClick={() => this.selectCard(i)}
+              >
+                <Fighters card={draft} />
+              </div>
+            );
+          }
+        )}
+        {/* </PoseGroup> */}
+      </div>
     );
   }
 }
